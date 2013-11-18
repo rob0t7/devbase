@@ -22,3 +22,6 @@ end
 rbenv_gem "bundler" do
   ruby_version "2.0.0-p247"
 end
+
+# Install Postgresql
+include_recipe "postgresql::server"
