@@ -7,6 +7,10 @@
 # All rights reserved - Do Not Redistribute
 #
 
+# Install Dev Tools
+yum_package "emacs-nox"
+
+# Install Ruby 2.0.0
 include_recipe "rbenv::default"
 include_recipe "rbenv::ruby_build"
 
