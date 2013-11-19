@@ -37,3 +37,6 @@ postgresql_database_user 'vagrant' do
   password 'vagrant'
   action :create
 end
+
+# Install NodeJS
+include_recipe 'nodejs'
