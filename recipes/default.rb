@@ -40,3 +40,6 @@ end
 
 # Install NodeJS
 include_recipe 'nodejs'
+
+# Install Nginx
+include_recipe 'nginx'
