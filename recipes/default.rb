@@ -19,19 +19,41 @@
 
 # Install Dev Tools
 yum_package "emacs-nox"
+yum_package "sqlite-devel"
 
-# Install Ruby 2.0.0
-include_recipe "rbenv::default"
-include_recipe "rbenv::ruby_build"
-
-rbenv_ruby "2.0.0-p247" do
-  ruby_version "2.0.0-p247"
-  global true
+# Install ZSH
+package "zsh" do
+  action :install
+end
+git "/home/vagrant/.oh-my-zsh" do
+  repository "https://github.com/robbyrussell/oh-my-zsh.git"
+  reference "master"
+  action :checkout
+  user "vagrant"
+  group "vagrant"
+  not_if "test -d /home/vagrant/.oh-my-zsh"
+end
+template "/home/vagrant/.zshrc" do
+  source "zshrc.erb"
+  owner "vagrant"
+  group "vagrant"
+  action :create_if_missing
+end
+bash "change chsh" do
+  user "root"
+  code "chsh -s /bin/zsh vagrant"
 end
 
-rbenv_gem "bundler" do
-  ruby_version "2.0.0-p247"
-end
+# Install Ruby for the vagrant user
+node.default['rbenv']['user_installs'] = [
+  {
+    user: 'vagrant',
+    rubies: ['2.0.0-p247'],
+    gems: { '2.0.0-p247' => [ {'name' => 'bundler', 'version' => '1.3.5'}] }
+  }
+]
+include_recipe "ruby_build"
+include_recipe "rbenv::user"
 
 # Install Postgresql
  include_recipe "postgresql::server"

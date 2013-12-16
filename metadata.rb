@@ -8,7 +8,9 @@ version          '0.1.0'
 
 recipe 'devbase', 'Install the packages needed for NodeJS or Rails Development'
 
+#depends 'crbenv'
 depends 'rbenv'
+depends 'ruby_build'
 depends 'postgresql'
 depends 'database'
 depends 'nodejs'
