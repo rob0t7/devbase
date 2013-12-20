@@ -49,7 +49,7 @@ node.default['rbenv']['user_installs'] = [
   {
     user: 'vagrant',
     rubies: ['2.0.0-p247'],
-    gems: { '2.0.0-p247' => [ {'name' => 'bundler', 'version' => '1.3.5'}] }
+    gems: { '2.0.0-p247' => [ {'name' => 'bundler', 'version' => '1.3.5'}, {'name' => 'compass'}] }
   }
 ]
 include_recipe "ruby_build"
