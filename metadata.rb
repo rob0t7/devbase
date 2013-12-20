@@ -14,6 +14,8 @@ depends 'ruby_build'
 depends 'postgresql'
 depends 'database'
 depends 'nodejs'
+depends 'npm'
 depends 'nginx'
+depends 'mongodb'
 
 supports 'centos'

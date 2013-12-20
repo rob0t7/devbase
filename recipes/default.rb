@@ -56,7 +56,7 @@ include_recipe "ruby_build"
 include_recipe "rbenv::user"
 
 # Install Postgresql
- include_recipe "postgresql::server"
+include_recipe "postgresql::server"
 include_recipe "postgresql::ruby"
 postgresql_connection_info = {
   host: 'localhost',
@@ -73,5 +73,21 @@ end
 # Install NodeJS
 include_recipe 'nodejs'
 
+# Install ExpressJS
+npm_package "express" do
+  action :install
+end
+
+# Install Yeoman + yeoman generators
+%w(grunt-cli yeoman generator-angular).each do |x|
+  npm_package x do
+    action :install
+  end
+end
+
 # Install Nginx
 include_recipe 'nginx'
+
+# Install MongoDB
+include_recipe 'mongodb::10gen_repo'
+include_recipe 'mongodb::default'
