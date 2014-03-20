@@ -20,6 +20,18 @@ The following cookbooks are direct dependencies:
 The following platforms are supported and tested:
     * CentOS 6.4
 
+### Prereqs
+
+Install plugins for Vagrant
+
+    vagrant plugin install vagrant-berkshelf
+
+### Instructions
+Make sure your machine has nfs-server installed `sudo apt-get install nfs-kernel-server`
+[Download Vagrant 1.4.3](http://www.vagrantup.com/download-archive/v1.4.3.html) and install
+[Download the Vagrant box](http://192.168.1.78:81/Vagrant-UEMBase.box)
+
+
 Author
 ------
 

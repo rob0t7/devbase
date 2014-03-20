@@ -25,6 +25,11 @@ yum_package "sqlite-devel"
 package "zsh" do
   action :install
 end
+
+package "git" do
+  action :install
+end
+
 git "/home/vagrant/.oh-my-zsh" do
   repository "https://github.com/robbyrussell/oh-my-zsh.git"
   reference "master"
@@ -48,27 +53,27 @@ end
 node.default['rbenv']['user_installs'] = [
   {
     user: 'vagrant',
-    rubies: ['2.0.0-p247'],
-    gems: { '2.0.0-p247' => [ {'name' => 'bundler', 'version' => '1.3.5'}, {'name' => 'compass'}] }
+    rubies: ['2.1.1'],
+    gems: { '2.1.1' => [ {'name' => 'bundler', 'version' => '1.5.3'}, {'name' => 'compass'}] }
   }
 ]
 include_recipe "ruby_build"
 include_recipe "rbenv::user"
 
-# Install Postgresql
-include_recipe "postgresql::server"
-include_recipe "postgresql::ruby"
-postgresql_connection_info = {
-  host: 'localhost',
-  port: node['postgresql']['config']['port'],
-  username: 'postgres',
-  password: node['postgresql']['password']['postgres']
-}
-postgresql_database_user 'vagrant' do
-  connection postgresql_connection_info
-  password 'vagrant'
-  action :create
-end
+# # Install Postgresql
+# include_recipe "postgresql::server"
+# include_recipe "postgresql::ruby"
+# postgresql_connection_info = {
+#   host: 'localhost',
+#   port: node['postgresql']['config']['port'],
+#   username: 'postgres',
+#   password: node['postgresql']['password']['postgres']
+# }
+# postgresql_database_user 'vagrant' do
+#   connection postgresql_connection_info
+#   password 'vagrant'
+#   action :create
+# end
 
 # Install NodeJS
 include_recipe 'nodejs'
@@ -89,5 +94,12 @@ end
 include_recipe 'nginx'
 
 # Install MongoDB
-include_recipe 'mongodb::10gen_repo'
+
+# include_recipe 'mongodb::10gen_repo' #10gen returns unsigned packages, recipe doesn't deal with it well
+package node[:mongodb][:package_name] do
+  action :install
+  version node[:mongodb][:package_version]
+  options "--nogpgcheck"
+end
+
 include_recipe 'mongodb::default'
